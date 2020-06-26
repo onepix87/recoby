@@ -24,6 +24,8 @@ app.get('/recoby', async (req, res, next) => {
         const innerReq = await fetch(url, reqInit);
         const respJson = await innerReq.json();
 
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
         await res.json(respJson);
         res.end();
     }
