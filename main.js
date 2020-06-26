@@ -1,11 +1,15 @@
 const fetch = require("node-fetch");
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const port = 8000;
 
 app.use(express.json());
+app.use(cors());
 
-app.get('/recoby', async (req, res, next) => {
+app.options('/recoby', cors());
+
+app.get('/recoby', cors(), async (req, res, next) => {
 
     const {referer, url} = req.query;
 
@@ -25,9 +29,6 @@ app.get('/recoby', async (req, res, next) => {
         const respJson = await innerReq.json();
 
         await res.json(respJson);
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader("Access-Control-Allow-Methods", "*");
-        res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
         res.end();
     }
     catch (e) {
