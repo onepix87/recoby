@@ -11,8 +11,10 @@ app.options('/recoby', cors());
 
 app.get('/recoby', cors(), async (req, res, next) => {
 
-    const {referer, url} = req.query;
+    const {endpoint} = req.query;
+    const {referer, url} = JSON.parse(endpoint);
 
+    if(!endpoint) res.status(400).json({ error: 'Request endpoint config object not defined' }).end();
     if(!referer) res.status(400).json({ error: 'Request referer parameter not defined' }).end();
     if(!url) res.status(400).json({ error: 'Request url parameter not defined' }).end();
 
